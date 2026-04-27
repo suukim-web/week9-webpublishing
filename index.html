@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Let's Dig!</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Asta+Sans:wght@300..800&family=Noto+Sans+JP:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Orbit&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+
+  <style>
+* {margin: 0;
+  padding: 0;
+  box-sizing: border-box;}
+
+html, body {font-family: 'Orbit', sans-serif;}
+
+/* NAV */
+.nav {position: fixed;
+    top: 0; width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    text-align: center;
+
+    padding: 20px 0;
+    z-index: 10;
+
+    font-size: 15px; color: white;
+    transition: color 0.3s;}
+
+.nav.scrolled {color: black;}
+.nav a {color: inherit;
+        text-decoration: none;}
+
+/* 표지 */
+.start {position: relative;
+        height: 100vh;
+        overflow: hidden;}
+
+/* VIDEO */
+.video-bg {position: fixed;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          z-index: -2;}
+
+.video-bg video {width: 100%; height: 100%;
+                object-fit: cover;}
+
+/* TEXT */
+.content {position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+          color: white; text-align: center;
+          width: 100%;
+          z-index: 1;
+
+          overflow: hidden;}
+
+.title {font-size: 220px; font-weight: 400;
+        display: inline-block;
+        justify-content: center;
+        white-space: normal;}
+
+/* 글자 */
+.title span {display: inline-block;
+
+            margin-right: -15px;
+
+            transition: transform 0.15s ease-out;}
+
+/* WHITE SECTION */
+.white-section {
+  background: linear-gradient(to bottom, #1EFFFB 0%, white 100%);
+  color: black;
+  position: relative;
+  z-index: 1;
+  padding-top: 150px;
+  padding-right: 40px;
+  padding-bottom: 200px;
+  padding-left: 90px;
+  background-attachment: fixed;}
+
+h2 {font-family: 'pretendard', sans-serif;
+    font-size: 65px; font-weight: 700;
+    line-height: 1.4; letter-spacing: -2px;}
+
+h3 {font-family: 'pretendard', sans-serif;
+    font-size: 40px; font-weight: 700;
+    line-height: 1.4; letter-spacing: -2px;}
+
+p {font-family: 'pretendard', sans-serif;
+    font-size: 22px; font-weight: 400;
+    line-height: 1.7; letter-spacing: -0.5px;
+    padding-top: 10px;}
+
+.circle-img {position: absolute;
+              right: 9%; top: 40%;
+              transform: translateY(-50%);
+              width: 650px;
+              transition: transform 0.25s ease-out;}
+.circle-img:hover {transform: translateY(-52%)
+                    scale(1.02);}
+
+/* about */
+.about{background: white; 
+        padding-top: 150px;
+        padding-left: 90px;
+        padding-bottom: 100px;}
+.edge{padding-top: 90px;}
+
+.about-section {position: relative;}
+
+.aboutimages {position: absolute;
+              top: 0; left: 0;
+              width: 100%; height: 100%;
+              pointer-events: none;
+              z-index: 0;}
+
+.aboutimages img {position: absolute;
+                  width: 180px;
+                  opacity: 0;
+                  transform: translate(-50%, -50%) scale(0.8);
+                  transition: all 0.3s ease;}
+
+/* when we dig.. */
+.white-section.moving-bg{position: relative;
+                        padding-top: 110px; padding-bottom: 0px;}
+
+.moving-bg {position: relative; overflow: hidden;}
+
+.bg-marquee {position: absolute;
+              top: 0; left: 0;
+              width: 100%; height: 100%;
+              pointer-events: none;
+              z-index: 0;}
+
+.track1 {animation-duration: 5s;}
+.track2 {animation-duration: 20s;}
+.track3 {animation-duration: 15s;}
+.bg-track {display: flex;
+            white-space: nowrap;
+
+            animation: bgScroll 10s linear infinite;}
+
+.bg-track span {font-family: 'pretendard', sans-serif;
+                font-size: 250px; font-weight: 700;
+                color: rgba(0,0,0,0.08);
+                margin-right: 80px;}
+/*animation*/
+@keyframes bgScroll {0% {transform: translateX(0%);}
+                100% {transform: translateX(-50%);}}
+
+.content-front {position: relative;
+                z-index: 1;
+                min-height: 600px;}
+
+.center,.center2{text-align: center; padding-top: 0px;}
+
+.mutter {font-size: 18px;
+        position: absolute;
+        right: 200px; top: 60%;
+        transform: translateY(-50%);}
+.girl {position: absolute;
+        left: -90px; bottom: 0;
+        width: 1200px;
+        z-index: 1;}
+
+
+.now {color: white;
+      padding-top: 150px; padding-right: 40px; padding-bottom: 200px; padding-left: 90px;
+      text-align: center;}
+
+.center2 {display: inline-block;
+        padding: 160px 40px;
+
+        color: white; font-size: 70px; font-weight: 700;}
+
+.letsdig {text-align: right;}
+
+
+.calendar-section {position: relative;
+                  height: 130vh;
+                  overflow: visible;
+                  padding-bottom: 1200px;}
+
+/* 텍스트 */
+.calendar-text {text-align: right;
+              position: absolute;
+              top: 120px; right: 90px;
+              color: white;
+
+              z-index: 3;}
+
+.calendar-box {position: absolute;
+
+              bottom: -300px; left: 50%;
+              transform: translateX(-50%);
+
+              width: 100%;
+              max-width: none;
+              z-index: 20;}
+
+/* 이미지 */
+.calendar-box img {width: 100%;
+                  display: block;}
+
+.map{background: linear-gradient(to bottom, #1EFFFB 0%,
+    #bafdf8 12%, white 28%, white 78%, #c8faf7 92%, #1EFFFB 100%);
+    padding: 120px 0;}
+
+/*상단*/
+.how-top{width: 90%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom:140px; margin-top: 80px;}
+
+.ooharu{width:420px;
+        margin-left: 150px;}
+
+.top-copy{margin-right: 250px;}
+
+/*네트워크 맵*/
+.how-middle{width: 100%; position: relative;}
+.network{width: 100%; display: block; margin: 0 auto; position: relative;
+          
+          opacity: 0;
+          transform: translateY(-80px); /*아래에서 시작*/
+          transition: all 1.4s cubic-bezier(.22,1,.36,1);}
+
+/*1번과 2번 사이*/
+.overlap-1{margin-top: -500px;}
+.network2{width: 96%; margin-left: -40px;}
+/*2번과 3번 사이*/
+.overlap-2{margin-top: -370px;}
+.network.show{opacity: 1; transform: translateY(0);}
+
+/*하단*/
+.how-bottom{text-align: center;
+            margin-top:140px; margin-bottom: 80px;}
+.last-network{margin-bottom: 150px;}
+.n1{z-index: 3;}
+.n2{z-index: 2;}
+.n3{z-index: 1;}
+
+.record{padding-top: 500px;
+        text-align: center;}
+
+/* RECORD SECTION */
+
+.record-top{margin-bottom: 140px;}
+
+.record-middle{width: 100%;
+                position: relative;
+                padding-left: 0;}
+
+/* 공통 이미지 */
+.recordnet{width: 70%;
+          display: block;
+          margin: 0; margin-left: 0px;
+          position: relative;
+
+          opacity: 0;
+          transform: translateY(80px);
+          transition: all 1.4s cubic-bezier(.22,1,.36,1);}
+
+/* 등장 */
+.recordnet.show{opacity: 1;
+                transform: translateY(0);}
+
+.record{padding:220px 0;
+        text-align: center;
+        overflow:hidden;}
+
+/* intro */
+.record-intro{text-align:center;
+              font-family: 'Orbit', sans-serif;
+              margin-top: 150px;}
+
+.record-intro .day-card{margin-top:60px;}
+
+.record-intro .date{font-family:'Orbit', sans-serif;
+                    font-size:50px; line-height:1.5; color: white;
+                    margin-bottom:13px;}
+
+.record-intro .title-big{font-family:'pretendard', sans-serif;
+                        font-size:50px; line-height:1.5; letter-spacing:-2px; color: white;
+                        margin-bottom:30px;}
+
+.record-intro .go-btn{font-family:'Orbit', sans-serif;
+                      font-size:63px;
+                      border:none; border-radius:999px;
+                      background:#f2f2f2;
+                      cursor:pointer;}
+.record-intro .go-btn{display: inline-block;
+                      font-family: 'Orbit', sans-serif;
+                      font-size: 40px; padding: 18px 52px;
+                      border-radius: 999px;
+                      background: #ffffff;}
+
+.day-card{margin-top:60px;}
+
+/* 이미지 */
+.record-img{width:70%;
+            display:block;}
+
+.glow-wrap{position:relative;
+          overflow:hidden;
+          display:inline-block;
+
+          padding:30px 70px;
+          margin:200px auto 0;}
+
+.glow-wrap::after{content:'';
+                  position:absolute;
+                  inset:-3px;
+
+                  opacity:.9;
+                  pointer-events:none;}
+
+#recordStart{border:none;
+            background:#1EFFFB;
+            color:#000;
+            padding:13px 40px;
+            border-radius:999px;
+            font-size:40px; font-family:'Orbit', sans-serif;
+            cursor:pointer;
+            transition:.28s ease;}
+
+#recordStart:hover{background:#000;
+                    color:#fff;
+                    transform:scale(1.05);}
+
+.card-video{position:absolute;
+            top:0; left:0;
+            width:100%; height:100%;
+            object-fit:cover;
+            z-index:0;}
+
+.card-content{position:relative;
+              z-index:2;}
+
+.glow-wrap::before{content:'';
+                    position:absolute;
+                    inset:0;
+                    background:rgba(255,255,255,0.08);
+                    z-index:1;}
+
+.recommend{width: 70%; display: block;
+          margin: 0 auto;}
+
+html {scroll-behavior: smooth;}
+
+.record-page{position:fixed;
+            inset:0;
+            background:white;
+            z-index:9999;
+
+            transform:translateY(100%);
+            transition:.8s cubic-bezier(.22,1,.36,1);
+
+            overflow-y:auto;}
+
+.record-page.show{transform:translateY(0);}
+
+.record-page-inner{padding:100px 80px;}
+
+.back-btn{position:fixed;
+          top:30px; left:30px;
+
+          border:none;
+          background:#fff;
+          color:#000;
+
+          padding:14px 22px;
+          border-radius:999px;
+
+          font-size:22px; font-family:'Orbit', sans-serif;
+
+          cursor:pointer;
+          z-index:10000;
+
+          transition:all .28s ease;}
+
+.back-btn:hover{background:#000;
+                color:#fff;
+              transform:scale(1.05);}
+
+.click-note{font-family: pretendard; text-align:center; font-size:30px; color:black;
+            margin-top: 60px; margin-bottom:10px;
+            animation:floatText 2.4s ease-in-out infinite;}
+
+@keyframes floatText{
+  0%   {transform:translateY(0);}
+  50%  {transform:translateY(-10px);}
+  100% {transform:translateY(0);}}
+
+  .record-slider{
+  position:relative;
+  width:100%; height:700px;
+  margin-top:60px;
+  overflow:hidden;}
+
+.slide{position:absolute;
+      inset:0;
+
+      width:100%; height:100%;
+      object-fit:contain;
+
+      opacity:0;
+      transition:opacity .8s ease;}
+
+.slide.active{opacity:1;}
+
+.record-desc{font-weight: 400;font-size: 26px; line-height: 1.6;
+            margin-left: 520px; margin-top: 15px;}
+.record-desc2{font-family: Orbit;
+              font-size: 15px; 
+              line-height: 1.9; 
+              margin-left: 210px;
+              margin-top: -200px;}
+
+.pure-white{background: white; padding: 0 0 200px 0;}
+.friends-section{position:relative;
+                width:100%; height:100vh;
+                overflow:hidden;
+                margin-top: 180px;}
+
+.friend-bg{position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;}
+
+.featured-user{position:absolute;
+              left:34%;top:56%;
+              transform:translate(-50%,-50%);
+              animation:floatUser 2.8s ease-in-out infinite;}
+
+.hajime-photo{width:590px;}
+
+.click-text{position:absolute;
+            top:-70px; left:30%;
+            color:red; font-size:40px;}
+@keyframes floatUser{
+  0%{ transform:translate(-50%,-50%) translateY(0); }
+  50%{ transform:translate(-50%,-50%) translateY(-23px); }
+  100%{ transform:translate(-50%,-50%) translateY(0); }
+}
+.friend-title{padding: 120px 0 0 90px;}
+
+.full-map{width:100%;
+          min-height: 100vh; 
+          object-fit: cover;
+          display: block;}
+.hajime-inner{padding:0; position:relative;}
+
+.hajime-copy{position:absolute;
+            font-family:'pretendard'; font-weight: 500; color:#000;}
+
+.top-copy2{top:70px; right:70px;
+          font-size:44px; line-height:1.45; text-align:right;}
+
+.top-copy2 span{background:#ff9ea0; padding:6px 10px;}
+
+.bottom-copy2{left:60px; bottom:130px;
+              font-size:44px; line-height:1.45;}
+
+.hello-btn{display:block;
+          margin-top:25px;
+
+          border:none;
+          background:#1EFFFB;
+          border-radius:999px;
+
+          padding:18px 42px;
+          font-size:32px; font-family:'pretendard';
+          cursor:pointer;}
+
+.review-bg{width:100%; margin-top: 120px;}
+.review-section{padding: 300px 0 300px 0;}
+
+.subscribe-img{width: 90%;
+              display: block;
+              margin: 0 auto;}
+footer{padding: 90px 20px 30px 20px; color: white; }
+.footer-img{width: 100%; display: block; margin: 0 auto;}
+.footer-bottom{
+  margin-top:25px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;}
+.footer-right{
+  text-align:right;}
+
+.footerp{
+  font-weight:200;
+  padding:0;
+  line-height:1.2;}
+
+
+  </style>
+</head>
+
+
+
+<body>
+<section class="start">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#about">About</a>
+    <a href="#dig">When we dig...</a>
+    <a href="#letsdig">Let’s dig!</a>
+    <a href="#how">How</a>
+    <a href="#review">Review</a>
+  </nav>
+
+  <!-- VIDEO -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="footage1.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- TEXT -->
+  <div class="content">
+    <h1 class="title">
+      <span>L</span><span>e</span><span>t</span><span>'</span><span>s</span>
+      <span>&nbsp;</span>
+      <span>D</span><span>i</span><span>g</span><span>!</span>
+    </h1>
+  </div>
+
+</section>
+
+<section class="white-section">
+
+  <h2>하나의 취향에서, <br> 무한한 취향으로 </h2>
+  <p>음악, 이미지, 사람, 영화까지. <br>
+      취향을 가로지르는 디깅 플랫폼 </p>
+  <img src="diglogo.png" class="circle-img">
+
+</section>
+
+<section class="about-section" id="about">
+  <div class="aboutimages"></div>
+  <div class="about">
+    <h2>취향 찾기, 더는 막막하지 않아요.</h2>
+    <p class="edge">Let's Dig은 하나의 취향에서 다양한 콘텐츠로의<br>
+        확장을 돕는 디깅 도우미 플랫폼입니다. 음악, 이미지,<br>
+      사람, 흩어져 있던 취향을 하나의 흐름으로 연결해요.<br>
+      디깅하다 멈춰도 괜찮아요. 당신이 탐색한 경로를<br>
+      기록하고, 언제든 이어서 더 깊이 들어갈 수 있도록 도와줘요. <br>
+      막막했던 탐색 경험, 이제 Let's Dig에서 즐겨요!</p>
+  </div>
+</section>
+
+<section class="white-section moving-bg" id="dig">
+  <div class="bg-marquee">
+    <div class="bg-track track1">
+      <span>밴드 캠프, 애플 뮤직, 스포티파이, 인스타그램</span>
+    </div>
+
+    <div class="bg-track track2">
+      <span>핀터레스트, 비핸스, 왓챠피디아, 사운드클라우드</span>
+    </div>
+
+    <div class="bg-track track3">
+      <span>사운드클라우드, 스포티파이, 왓챠피디아, 애플뮤직</span>
+    </div>
+  </div>
+
+  <div class="content-front">
+    <h3 class="center">
+        플랫폼을 계속 옮겨야 하는 디깅, <br>
+        막막하고 지치지 않나요?</h3>
+    <img src="girl.png" class="girl">
+    <p class="mutter"> 음악은 애플뮤직... <br>
+        이미지는 핀터레스트...<br>
+        아티스트는 인스타그램...</p>
+  </div>
+</section>
+
+<section class="now" id="letsdig">
+  <div>
+    <h3 class="center2">
+    이젠, 하나의 취향에서 모든 콘텐츠로!</h3>
+  </div>
+</section>
+
+
+<section class="map how" id="how">
+
+  <div class="how-top">
+    <img src="ooharu.png" class="ooharu">
+
+    <h2 class="top-copy">
+      좋아하는 콘텐츠<br>
+      단 하나로,
+    </h2>
+  </div>
+
+  <div class="how-middle">
+
+      <img src="network1.png" class="network n1 reveal">
+      <img src="network2.png" class="network n2 overlap-1 network2 reveal">
+      <img src="network3.png" class="network n3 overlap-2 reveal last-network">
+  </div>
+
+  <div class="how-bottom">
+    <h2>
+      당신을 위한<br>
+      무한한 취향을<br>
+      누려보세요.
+    </h2>
+  </div>
+
+</section>
+
+
+<section class="calendar-section">
+  <div class="calendar-wrap">
+    <h2 class="calendar-text">
+      멈춰도 괜찮아요. <br> 
+      당신의 모든 걸 기억하니깐!</h2>
+
+    <div class="calendar-box">
+    <img src="calendar.png">
+  </div>
+  </div>
+</section>
+
+<section class="white-section record">
+
+  <div class="record-intro">
+    <h2>당신의 디깅 경로를 기록하여<br>맞춤 서비스를 제공해요.</h2>
+
+    <div class="day-card glow-wrap">
+
+  <video class="card-video" autoplay muted loop playsinline>
+    <source src="footage1.mp4" type="video/mp4">
+  </video>
+
+  <div class="card-content">
+    <div class="date">26.4.20</div>
+
+    <div class="title-big">
+      이미지<br>
+      탐색의 날!
+    </div>
+
+    <button id="recordStart" class="go-btn">Go →</button>
+  </div>
+</div>
+
+    <div class="click-note">버튼을 클릭해보세요!</div>
+
+</section>
+
+<section class="white-section pure-white">
+  <div>
+    <h2 class="friend-title">찾았다, 내 친구! <br>
+        취향 기반 유저를 연결해 드려요.</h2>
+  </div>
+  <div class="friends-section">
+    <img src="friends.png" class="friend-bg">
+  
+  <div class="featured-user">
+      <img src="hajime.png" class="hajime-photo">
+    <div class="click-text">클릭해보세요!</div>
+  </div>
+
+
+
+  </section>
+
+<section class="white-section review-section" id="review">
+  <div>
+    <h2 class="center">수많은 만족 후기!</h2>
+    <img src="review.png" class="review-bg">
+  </div>
+</section>
+
+<section class="white-section">
+  <div>
+    <h2 class="center"> 경험해보세요. </h2>
+    <img src="subscribe.png" class="subscribe-img">
+  </div>
+</section>
+
+<div id="recordPage" class="record-page">
+
+  <button id="closeRecord" class="back-btn">← Back</button>
+
+  <div class="record-page-inner">
+
+    <h2>Digging Flow · April 20, 2026</h2>
+
+    <div class="record-slider">
+
+    <img src="paper.png" class="slide active ">
+    <img src="tara.png" class="slide">
+    <img src="terry.png" class="slide">
+    <img src="joakim.png" class="slide">
+    <img src="thegabys.png" class="slide">
+    <img src="ian.png" class="slide">
+
+  </div>
+
+    <p class="record-desc"> 
+        4시간의 디깅을 선명하게 기록한 날이에요. 독립음악에서 출발해 <br>
+        다국적 디자이너와 일러스트레이션에 이르렀어요. 가장 많이 머문<br>
+        영역은 독립음악이에요. 서로 다른 매체를 넘나들면서도, 꾸준히<br>
+        조용하고 선명한 감정선을 가진 콘텐츠를 선택했어요. 트렌드형<br>
+        발견보다 발굴형 발견이 높은 비중을 차지했어요. </p>
+
+    <p class="record-desc2">
+        Keywords for Today <br>
+        독립음악<br>
+        시각예술<br>
+        다국적<br>
+        조용한 감정선<br>
+        발굴형 발견</p>
+
+  </div>
+
+        <img src="recommend.png" class="recommend">
+
+</div>
+
+<div id="hajimePage" class="record-page">
+
+  <button id="closeHajime" class="back-btn">← Back</button>
+
+  <div class="record-page-inner hajime-inner">
+
+    <img src="lastnet.png" class="full-map">
+
+    <div class="hajime-copy top-copy2">
+      나의 디깅맵 중,<br>
+      <span>Hajime님도 지나간 자리에요.</span>
+    </div>
+
+    <div class="hajime-copy bottom-copy2">
+      Hajime님에게 인사해볼까요?
+      <button class="hello-btn">인사하기 →</button>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <img src="footer.png" class="footer-img">
+
+  <div class="footer-bottom">
+    <div class="footer-left">
+      <p class="footerp"> &copy;2026 Let's Dig! Design by Subin Kim<p>
+      <p class="footerp"> We don't have the copyright on videos or photos. <br>
+      But Please do not copy the design without permission. </p>
+    </div>
+    
+    <div class="footer-right">
+      <p class="footerp"> 무한한 취향의 경험은 Let's Dig에서.</p>
+      <p class="footerp"> timuharei@seoultech.ac.kr</p>
+      <p class="footerp"> +82 1234-1234</p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+const hajime = document.querySelector(".featured-user");
+const hajimePage = document.getElementById("hajimePage");
+const closeHajime = document.getElementById("closeHajime");
+
+hajime.addEventListener("click", ()=>{
+
+  hajimePage.classList.add("show");
+  history.pushState({hajime:true}, "", "#hajime");
+
+});
+
+closeHajime.addEventListener("click", ()=>{
+  history.back();
+});
+
+window.addEventListener("popstate", ()=>{
+
+  page.classList.remove("show");
+  hajimePage.classList.remove("show");
+
+});
+
+
+
+const slides = document.querySelectorAll(".slide");
+
+let current = 0;
+
+setInterval(()=>{
+
+  slides[current].classList.remove("active");
+
+  current++;
+  if(current >= slides.length){
+    current = 0;
+  }
+
+  slides[current].classList.add("active");
+
+}, 2500);
+
+/* NAV 색 변경 */
+window.addEventListener("scroll", function() {
+  const nav = document.querySelector(".nav");
+
+  if (window.scrollY > window.innerHeight * 0.7) {
+    nav.classList.add("scrolled");
+  } else {
+    nav.classList.remove("scrolled");
+  }
+});
+
+const spans = document.querySelectorAll(".title span");
+
+document.addEventListener("mousemove", (e) => {
+  spans.forEach(span => {
+    const rect = span.getBoundingClientRect();
+
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    const dx = e.clientX - x;
+    const dy = e.clientY - y;
+
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    const max = 250; /* 🔥 범위 줄임 */
+
+    if (dist < max) {
+      const power = (max - dist) / max;
+
+  const maxMove = 100;  // 🔥 기존 20 → 60
+
+const moveX = Math.max(-maxMove, Math.min(maxMove, dx * power * 7));
+const moveY = Math.max(-maxMove, Math.min(maxMove, dy * power * 7));
+
+      const rotate = dx * power * 0.01;
+
+      span.style.transform = `
+        translate(${moveX}px, ${moveY}px)
+        rotate(${rotate}deg)
+      `;
+    } else {
+      span.style.transform = `translate(0,0) rotate(0deg)`;
+    }
+  });
+});
+
+const circle = document.querySelector(".circle-img");
+
+document.addEventListener("mousemove", (e) => {
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  const dx = e.clientX - centerX;
+  const dy = e.clientY - centerY;
+
+  // 🔥 여기 숫자가 핵심 (크게 하면 더 적극적)
+  const moveX = dx * 0.3;
+  const moveY = dy * 0.3;
+
+  circle.style.transform = `
+    translateY(-50%)
+    translate(${moveX}px, ${moveY}px)
+  `;
+});
+
+
+const images = [
+  "aboutimage1.png",
+  "aboutimage2.png",
+  "aboutimage3.png"
+];
+
+const container = document.querySelector(".aboutimages");
+const section = document.querySelector(".about");
+
+let lastTime = 0;
+
+section.addEventListener("mousemove", (e) => {
+  const now = Date.now();
+  if (now - lastTime < 120) return;
+  lastTime = now;
+
+  const img = document.createElement("img");
+
+  img.src = images[Math.floor(Math.random() * images.length)];
+
+  const rect = section.getBoundingClientRect();
+
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  img.style.left = x + "px";
+  img.style.top = y + "px";
+
+  const rotate = Math.random() * 40 - 20;
+
+  img.style.transform = `
+    translate(-50%, -50%)
+    rotate(${rotate}deg)
+    scale(1)
+  `;
+
+  img.style.opacity = 1;
+
+  container.appendChild(img);
+
+  setTimeout(() => {
+    img.style.opacity = 0;
+    img.style.transform += " scale(0.8)";
+  }, 400);
+
+  setTimeout(() => {
+    img.remove();
+  }, 800);
+});
+
+
+const reveals = document.querySelectorAll('.reveal');
+
+window.addEventListener('scroll', () => {
+
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    const trigger = window.innerHeight * 0.42;
+
+    if(top < trigger){
+      el.classList.add('show');
+    }
+  });
+
+});
+
+const btn = document.getElementById("recordStart");
+const page = document.getElementById("recordPage");
+const closeBtn = document.getElementById("closeRecord");
+
+btn.addEventListener("click", ()=>{
+
+  page.classList.add("show");
+  history.pushState({record:true}, "", "#record");
+
+});
+
+closeBtn.addEventListener("click", ()=>{
+  history.back();
+});
+
+window.addEventListener("popstate", ()=>{
+
+  page.classList.remove("show");
+
+});
+</script>
+
+</body>
+</html>
